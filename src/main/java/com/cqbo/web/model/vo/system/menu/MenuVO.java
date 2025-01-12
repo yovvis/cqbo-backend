@@ -35,17 +35,23 @@ public class MenuVO implements Serializable {
     @Schema(description = "组件路径")
     private String url;
 
-    @Schema(description = "国际化")
-    private String locale;
+    @Schema(description = "重定向路径")
+    private String redirect;
 
     @Schema(description = "资源类型：0：目录 1：菜单 2：按钮")
     private Integer type;
 
+    @Schema(description = "是否套用iframe")
+    private Integer isIframe;
+
     @Schema(description = "菜单可见：0-显示;1-隐藏")
-    private Integer visiable;
+    private Integer hideInMenu;
 
     @Schema(description = "图标")
     private String icon;
+
+    @Schema(description = "国际化")
+    private String locale;
 
     @Schema(description = "父菜单名称")
     private String parentName;
@@ -56,8 +62,9 @@ public class MenuVO implements Serializable {
     @Schema(description = "更新时间")
     private Date updateTime;
 
+    // 不一定要
     @Schema(description = "子菜单")
-    private List<Menu> children;
+    private List<MenuVO> children;
 
     @Schema(description = "值")
     private Long value;

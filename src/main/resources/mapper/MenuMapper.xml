@@ -11,10 +11,12 @@
         <result property="name" column="name" jdbcType="VARCHAR"/>
         <result property="path" column="path" jdbcType="VARCHAR"/>
         <result property="url" column="url" jdbcType="VARCHAR"/>
-        <result property="locale" column="locale" jdbcType="VARCHAR"/>
+        <result property="redirect" column="redirect" jdbcType="VARCHAR"/>
         <result property="type" column="type" jdbcType="TINYINT"/>
-        <result property="visiable" column="visiable" jdbcType="TINYINT"/>
+        <result property="isIframe" column="isIframe" jdbcType="TINYINT"/>
+        <result property="hideInMenu" column="hideInMenu" jdbcType="TINYINT"/>
         <result property="icon" column="icon" jdbcType="VARCHAR"/>
+        <result property="locale" column="locale" jdbcType="VARCHAR"/>
         <result property="parentName" column="parentName" jdbcType="VARCHAR"/>
         <result property="orderNum" column="orderNum" jdbcType="INTEGER"/>
         <result property="createTime" column="createTime" jdbcType="TIMESTAMP"/>
@@ -23,7 +25,7 @@
 
     <sql id="Base_Column_List">
         id
-        ,parentId,title,code,name,path,url,locale,type,visiable,icon,parentName,orderNum,createTime,updateTime
+        ,parentId,title,code,name,path,url,redirect,type,isIframe,hideInMenu,icon,locale,parentName,orderNum,createTime,updateTime
     </sql>
 
     <select id="getMenuByUserId" resultType="com.cqbo.web.model.entity.system.Menu">

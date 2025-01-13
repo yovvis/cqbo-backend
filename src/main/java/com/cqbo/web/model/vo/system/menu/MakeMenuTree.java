@@ -1,6 +1,5 @@
 package com.cqbo.web.model.vo.system.menu;
 
-import com.cqbo.web.model.entity.system.Menu;
 import org.springframework.beans.BeanUtils;
 
 import java.util.ArrayList;
@@ -9,28 +8,28 @@ import java.util.Optional;
 
 public class MakeMenuTree {
     // 组装树工具
-    public static List<Menu> makeTree(List<Menu> menuList, Long pid) {
+    public static List<MenuTreeVO> makeTree(List<MenuVO> menuVOList, Long pid) {
         // 存放组装的树数据
-        List<Menu> list = new ArrayList<>();
+        List<MenuTreeVO> list = new ArrayList<>();
         // 组装树
-        Optional.ofNullable(menuList).orElse(new ArrayList<>())
+        Optional.ofNullable(menuVOList).orElse(new ArrayList<>())
                 .stream()
                 .filter(item -> item != null && item.getParentId().equals(pid))
                 .forEach(item -> {
-                    Menu menu = new Menu();
-                    BeanUtils.copyProperties(item, menu);
-                    menu.setLabel(item.getTitle());
-                    menu.setValue(item.getId());
+                    MenuTreeVO menuTreeVO = new MenuTreeVO();
+                    BeanUtils.copyProperties(item, menuTreeVO);
+                    menuTreeVO.setLabel(item.getTitle());
+                    menuTreeVO.setValue(item.getId());
                     // 查找下级：递归调用
-                    List<Menu> children = makeTree(menuList, item.getId());
-                    menu.setChildren(children);
-                    list.add(menu);
+                    List<MenuTreeVO> children = makeTree(menuVOList, item.getId());
+                    menuTreeVO.setChildren(children);
+                    list.add(menuTreeVO);
                 });
         return list;
     }
 
     // 构造路由数据
-    public static List<RouterVo> makeRouter(List<Menu> menuList, Long pid) {
+    public static List<RouterVo> makeRouter(List<MenuVO> menuList, Long pid) {
         // 构建存放路由数据的容器
         List<RouterVo> list = new ArrayList<>();
         Optional.ofNullable(menuList).orElse(new ArrayList<>())

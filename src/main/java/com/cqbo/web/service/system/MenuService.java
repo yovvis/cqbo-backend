@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.cqbo.web.model.dto.system.menu.MenuQueryRequest;
 import com.cqbo.web.model.entity.system.Menu;
+import com.cqbo.web.model.vo.system.menu.MenuTreeVO;
 import com.cqbo.web.model.vo.system.menu.MenuVO;
 
 import java.util.List;
@@ -46,7 +47,7 @@ public interface MenuService extends IService<Menu> {
      *
      * @return
      */
-    List<Menu> getParent();
+    List<MenuTreeVO> getParent();
 
     /**
      * 根据用户Id查询菜单

@@ -5,14 +5,15 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cqbo.web.common.exception.BusinessException;
 import com.cqbo.web.common.exception.ErrorCode;
+import com.cqbo.web.common.utils.SqlUtils;
 import com.cqbo.web.mapper.system.MenuMapper;
 import com.cqbo.web.model.dto.system.menu.MenuQueryRequest;
 import com.cqbo.web.model.entity.system.Menu;
 import com.cqbo.web.model.vo.system.menu.MakeMenuTree;
+import com.cqbo.web.model.vo.system.menu.MenuTreeVO;
 import com.cqbo.web.model.vo.system.menu.MenuVO;
 import com.cqbo.web.service.system.MenuService;
 import com.cqbo.web.service.system.UserService;
-import com.cqbo.web.common.utils.SqlUtils;
 import jakarta.annotation.Resource;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -43,13 +44,11 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
 
         String path = menuQueryRequest.getPath();
         String name = menuQueryRequest.getName();
-        String parentName = menuQueryRequest.getParentName();
         String sortField = menuQueryRequest.getSortField();
         String sortOrder = menuQueryRequest.getSortOrder();
         QueryWrapper<Menu> queryWrapper = new QueryWrapper<>();
         queryWrapper.like(StrUtil.isNotBlank(path), "path", path);
         queryWrapper.like(StrUtil.isNotBlank(name), "name", name);
-        queryWrapper.like(StrUtil.isNotBlank(parentName), "parentName", parentName);
         queryWrapper.orderBy(SqlUtils.validSortField(sortField), sortOrder.equals("ascend"), sortField);
         return queryWrapper;
     }
@@ -73,22 +72,22 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     }
 
     @Override
-    public List<Menu> getParent() {
+    public List<MenuTreeVO> getParent() {
         String[] type = {"0", "1"};
         List<String> strings = Arrays.asList(type);
         QueryWrapper<Menu> query = new QueryWrapper<>();
         query.lambda().in(Menu::getType, strings).orderByAsc(Menu::getOrderNum);
         List<Menu> menuList = this.baseMapper.selectList(query);
         // 组装顶级树
-        Menu menu = new Menu();
-        menu.setTitle("根菜单");
-        menu.setLabel("根菜单");
-        menu.setParentId(-1L);
-        menu.setId(0L);
-        menu.setValue(0L);
-        menuList.add(menu);
+        MenuTreeVO menuTreeVO = new MenuTreeVO();
+        menuTreeVO.setTitle("根菜单");
+        menuTreeVO.setLabel("根菜单");
+        menuTreeVO.setParentId(-1L);
+        menuTreeVO.setId(0L);
+        menuTreeVO.setValue(0L);
+        List<MenuVO> menuVOList = this.getMenuVOList(menuList);
         // 组装菜单树
-        return MakeMenuTree.makeTree(menuList, -1L);
+        return MakeMenuTree.makeTree(menuVOList, -1L);
     }
 
     @Override

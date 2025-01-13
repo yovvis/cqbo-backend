@@ -5,19 +5,22 @@
 <mapper namespace="com.cqbo.web.mapper.system.MenuMapper">
     <resultMap id="BaseResultMap" type="com.cqbo.web.model.entity.system.Menu">
         <id property="id" column="id" jdbcType="BIGINT"/>
-        <result property="parentId" column="parentId" jdbcType="VARCHAR"/>
         <result property="title" column="title" jdbcType="VARCHAR"/>
-        <result property="code" column="code" jdbcType="VARCHAR"/>
-        <result property="name" column="name" jdbcType="VARCHAR"/>
-        <result property="path" column="path" jdbcType="VARCHAR"/>
-        <result property="url" column="url" jdbcType="VARCHAR"/>
-        <result property="redirect" column="redirect" jdbcType="VARCHAR"/>
-        <result property="type" column="type" jdbcType="TINYINT"/>
-        <result property="isIframe" column="isIframe" jdbcType="TINYINT"/>
-        <result property="hideInMenu" column="hideInMenu" jdbcType="TINYINT"/>
         <result property="icon" column="icon" jdbcType="VARCHAR"/>
-        <result property="locale" column="locale" jdbcType="VARCHAR"/>
-        <result property="parentName" column="parentName" jdbcType="VARCHAR"/>
+        <result property="path" column="path" jdbcType="VARCHAR"/>
+        <result property="component" column="component" jdbcType="VARCHAR"/>
+        <result property="redirect" column="redirect" jdbcType="VARCHAR"/>
+        <result property="affix" column="affix" jdbcType="TINYINT"/>
+        <result property="parentId" column="parentId" jdbcType="VARCHAR"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="hideInMenu" column="hideInMenu" jdbcType="TINYINT"/>
+        <result property="url" column="url" jdbcType="VARCHAR"/>
+        <result property="hideInBreadcrumb" column="hideInBreadcrumb" jdbcType="TINYINT"/>
+        <result property="hideChildrenInMenu" column="hideChildrenInMenu" jdbcType="TINYINT"/>
+        <result property="keepAlive" column="keepAlive" jdbcType="TINYINT"/>
+        <result property="target" column="target" jdbcType="VARCHAR"/>
+        <result property="code" column="code" jdbcType="VARCHAR"/>
+        <result property="type" column="type" jdbcType="TINYINT"/>
         <result property="orderNum" column="orderNum" jdbcType="INTEGER"/>
         <result property="createTime" column="createTime" jdbcType="TIMESTAMP"/>
         <result property="updateTime" column="updateTime" jdbcType="TIMESTAMP"/>
@@ -25,7 +28,8 @@
 
     <sql id="Base_Column_List">
         id
-        ,parentId,title,code,name,path,url,redirect,type,isIframe,hideInMenu,icon,locale,parentName,orderNum,createTime,updateTime
+        ,title,icon,path,component,redirect,affix,parentId,name,hideInMenu,url,hideInBreadcrumb,hideChildrenInMenu,keepAlive,target
+        ,code,type,orderNum,createTime,updateTime
     </sql>
 
     <select id="getMenuByUserId" resultType="com.cqbo.web.model.entity.system.Menu">

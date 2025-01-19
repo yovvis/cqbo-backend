@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @Tag(name = "UserController", description = "用户接口")
 @RestController
-@RequestMapping("/rest/user")
+@RequestMapping("/rest/sys/user")
 public class UserController {
     Logger logger = LoggerFactory.getLogger(UserController.class);
 

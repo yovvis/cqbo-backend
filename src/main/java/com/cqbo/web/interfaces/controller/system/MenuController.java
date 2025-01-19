@@ -31,7 +31,7 @@ import java.util.List;
  */
 @Tag(name = "MenuController", description = "资源接口")
 @RestController
-@RequestMapping("/rest/menu")
+@RequestMapping("/rest/sys/menu")
 public class MenuController {
     @Resource
     private MenuAppService menuAppService;

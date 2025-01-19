@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @Tag(name = "AuthController", description = "授权管理接口")
 @RestController
-@RequestMapping("/rest/auth")
+@RequestMapping("/rest/sys/auth")
 public class AuthController {
     @Resource
     private UserAppService userAppService;

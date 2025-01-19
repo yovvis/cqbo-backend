@@ -34,7 +34,7 @@ import java.util.Optional;
  */
 @Tag(name = "RoleController", description = "角色接口")
 @RestController
-@RequestMapping("/rest/role")
+@RequestMapping("/rest/sys/role")
 public class RoleController {
     @Resource
     private RoleAppService roleAppService;

@@ -5,10 +5,11 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.cqbo.web.application.service.UserAppService;
 import com.cqbo.web.domain.user.entity.User;
 import com.cqbo.web.domain.user.service.UserDomainService;
-import com.cqbo.web.infrastructure.common.DeleteRequest;
 import com.cqbo.web.infrastructure.exception.ErrorCode;
 import com.cqbo.web.infrastructure.exception.ThrowUtils;
+import com.cqbo.web.interfaces.dto.user.UserLoginRequest;
 import com.cqbo.web.interfaces.dto.user.UserQueryRequest;
+import com.cqbo.web.interfaces.dto.user.UserRegisterRequest;
 import com.cqbo.web.interfaces.vo.user.LoginUserVO;
 import com.cqbo.web.interfaces.vo.user.UserVO;
 import jakarta.annotation.Resource;
@@ -26,13 +27,18 @@ public class UserAppServiceImpl implements UserAppService {
     private UserDomainService userDomainService;
 
     @Override
-    public LoginUserVO userLogin(String userAccount, String userPassword) {
+    public LoginUserVO userLogin(UserLoginRequest userLoginRequest) {
+        String userAccount = userLoginRequest.getUserAccount();
+        String userPassword = userLoginRequest.getUserPassword();
         User.validUserLogin(userAccount, userPassword);
         return userDomainService.userLogin(userAccount, userPassword);
     }
 
     @Override
-    public long userRegister(String userAccount, String userPassword, String checkPassword) {
+    public long userRegister(UserRegisterRequest userRegisterRequest) {
+        String userAccount = userRegisterRequest.getUserAccount();
+        String userPassword = userRegisterRequest.getUserPassword();
+        String checkPassword = userRegisterRequest.getCheckPassword();
         User.validUserRegister(userAccount, userPassword, checkPassword);
         return userDomainService.userRegister(userAccount, userPassword, checkPassword);
     }
@@ -86,9 +92,9 @@ public class UserAppServiceImpl implements UserAppService {
     }
 
     @Override
-    public boolean deleteUser(DeleteRequest deleteRequest) {
-        ThrowUtils.throwIf(deleteRequest == null || deleteRequest.getId() <= 0, ErrorCode.PARAMS_ERROR);
-        return userDomainService.removeById(deleteRequest.getId());
+    public void deleteUser(Long id) {
+        boolean f = userDomainService.removeById(id);
+        ThrowUtils.throwIf(!f, ErrorCode.OPERATION_ERROR);
     }
 
     @Override

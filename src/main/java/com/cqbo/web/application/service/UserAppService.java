@@ -3,8 +3,9 @@ package com.cqbo.web.application.service;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.cqbo.web.domain.user.entity.User;
-import com.cqbo.web.infrastructure.common.DeleteRequest;
+import com.cqbo.web.interfaces.dto.user.UserLoginRequest;
 import com.cqbo.web.interfaces.dto.user.UserQueryRequest;
+import com.cqbo.web.interfaces.dto.user.UserRegisterRequest;
 import com.cqbo.web.interfaces.vo.user.LoginUserVO;
 import com.cqbo.web.interfaces.vo.user.UserVO;
 
@@ -17,21 +18,18 @@ public interface UserAppService {
     /**
      * 用户登录
      *
-     * @param userAccount
-     * @param userPassword
+     * @param userLoginRequest
      * @return
      */
-    LoginUserVO userLogin(String userAccount, String userPassword);
+    LoginUserVO userLogin(UserLoginRequest userLoginRequest);
 
     /**
      * 用户注册
      *
-     * @param userAccount   用户账户
-     * @param userPassword  用户密码
-     * @param checkPassword 校验密码
-     * @return 新用户 id
+     * @param userRegisterRequest
+     * @return
      */
-    long userRegister(String userAccount, String userPassword, String checkPassword);
+    long userRegister(UserRegisterRequest userRegisterRequest);
 
     /**
      * 获取当前登录用户
@@ -92,7 +90,7 @@ public interface UserAppService {
 
     UserVO getUserVOById(long id);
 
-    boolean deleteUser(DeleteRequest deleteRequest);
+    void deleteUser(Long id);
 
     void updateUser(User user);
 

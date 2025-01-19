@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @Tag(name = "UserController", description = "用户接口")
 @RestController
-@RequestMapping("/rest/sys/user")
+@RequestMapping("/rest/user")
 public class UserController {
     Logger logger = LoggerFactory.getLogger(UserController.class);
 
@@ -55,8 +55,8 @@ public class UserController {
     @PostMapping("/delete")
     public BaseResponse<Boolean> deleteUser(@RequestBody DeleteRequest deleteRequest) {
         ThrowUtils.throwIf(deleteRequest == null || deleteRequest.getId() <= 0, ErrorCode.PARAMS_ERROR);
-        boolean f = userAppService.deleteUser(deleteRequest);
-        return ResultUtils.success(f);
+        userAppService.deleteUser(deleteRequest.getId());
+        return ResultUtils.success(true);
     }
 
     @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)

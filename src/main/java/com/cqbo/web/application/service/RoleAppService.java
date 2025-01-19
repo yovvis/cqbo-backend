@@ -50,8 +50,8 @@ public interface RoleAppService {
 
     void updateById(Role role);
 
-    boolean removeById(Long id);
+    void removeById(Long id);
 
-    boolean save(Role role);
+    Long save(Role role);
     // endregion
 }

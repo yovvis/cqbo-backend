@@ -69,9 +69,9 @@ public interface MenuAppService {
     // region
     long save(Menu menu);
 
-    boolean removeById(Long id);
+    void removeById(Long id);
 
-    boolean updateById(Menu menu);
+    void updateById(Menu menu);
 
     Page<MenuVO> getMenuVOListPage(MenuQueryRequest menuQueryRequest);
 

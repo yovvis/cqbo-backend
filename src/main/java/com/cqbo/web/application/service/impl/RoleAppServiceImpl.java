@@ -77,8 +77,7 @@ public class RoleAppServiceImpl implements RoleAppService {
         long size = roleQueryRequest.getPageSize();
         Page<Role> rolePage = roleDomainService.page(new Page<>(current, size), roleDomainService.getQueryWrapper(roleQueryRequest));
         Page<RoleVO> roleVOPage = new Page<>(current, size, rolePage.getTotal());
-        List<RoleVO> roleVOList = roleDomainService.getRoleVOList(rolePage.getRecords());
-        roleVOPage.setRecords(roleVOList);
+        roleVOPage.setRecords(roleDomainService.getRoleVOList(rolePage.getRecords()));
         return roleVOPage;
     }
 
@@ -100,12 +99,15 @@ public class RoleAppServiceImpl implements RoleAppService {
     }
 
     @Override
-    public boolean removeById(Long id) {
-        return roleDomainService.removeById(id);
+    public void removeById(Long id) {
+        boolean f = roleDomainService.removeById(id);
+        ThrowUtils.throwIf(!f, ErrorCode.OPERATION_ERROR);
     }
 
     @Override
-    public boolean save(Role role) {
-        return roleDomainService.save(role);
+    public Long save(Role role) {
+        boolean f = roleDomainService.save(role);
+        ThrowUtils.throwIf(!f, ErrorCode.OPERATION_ERROR);
+        return role.getId();
     }
 }

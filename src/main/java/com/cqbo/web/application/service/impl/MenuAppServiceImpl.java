@@ -65,13 +65,15 @@ public class MenuAppServiceImpl implements MenuAppService {
     }
 
     @Override
-    public boolean removeById(Long id) {
-        return menuDomainService.removeById(id);
+    public void removeById(Long id) {
+        boolean f = menuDomainService.removeById(id);
+        ThrowUtils.throwIf(!f, ErrorCode.SYSTEM_ERROR);
     }
 
     @Override
-    public boolean updateById(Menu menu) {
-        return menuDomainService.updateById(menu);
+    public void updateById(Menu menu) {
+        boolean f = menuDomainService.updateById(menu);
+        ThrowUtils.throwIf(!f, ErrorCode.SYSTEM_ERROR);
     }
 
     @Override

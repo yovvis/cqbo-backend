@@ -31,7 +31,7 @@ import java.util.List;
  */
 @Tag(name = "MenuController", description = "资源接口")
 @RestController
-@RequestMapping("/rest/sys/menu")
+@RequestMapping("/rest/menu")
 public class MenuController {
     @Resource
     private MenuAppService menuAppService;
@@ -50,23 +50,22 @@ public class MenuController {
     @PostMapping("/delete")
     public BaseResponse<Boolean> deleteMenu(@RequestBody DeleteRequest deleteRequest) {
         ThrowUtils.throwIf(deleteRequest == null || deleteRequest.getId() < 0, ErrorCode.PARAMS_ERROR);
-        boolean f = menuAppService.removeById(deleteRequest.getId());
-        return ResultUtils.success(f);
+        menuAppService.removeById(deleteRequest.getId());
+        return ResultUtils.success(true);
     }
 
     @Operation(summary = "修改资源")
     @PostMapping(value = "/update")
-    public BaseResponse updateMenu(@RequestBody MenuUpdateRequest menuUpdateRequest) {
+    public BaseResponse<Boolean> updateMenu(@RequestBody MenuUpdateRequest menuUpdateRequest) {
         ThrowUtils.throwIf(menuUpdateRequest == null || menuUpdateRequest.getId() < 0, ErrorCode.PARAMS_ERROR);
         Menu menuEntity = MenuAssembler.toMenuEntity(menuUpdateRequest);
-        boolean f = menuAppService.updateById(menuEntity);
-        ThrowUtils.throwIf(!f, ErrorCode.OPERATION_ERROR);
+        menuAppService.updateById(menuEntity);
         return ResultUtils.success(true);
     }
 
     @Operation(summary = "分页获取资源列表")
     @PostMapping("/listPageVO")
-    public BaseResponse<Page<MenuVO>> listPermissionPage(@RequestBody MenuQueryRequest menuQueryRequestReq) {
+    public BaseResponse<Page<MenuVO>> listMenuPage(@RequestBody MenuQueryRequest menuQueryRequestReq) {
         ThrowUtils.throwIf(menuQueryRequestReq == null, ErrorCode.PARAMS_ERROR);
         Page<MenuVO> menuVOPage = menuAppService.getMenuVOListPage(menuQueryRequestReq);
         return ResultUtils.success(menuVOPage);

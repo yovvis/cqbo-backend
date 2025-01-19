@@ -1,7 +1,6 @@
 package com.cqbo.web;
 
 import io.micrometer.common.util.StringUtils;
-import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -17,7 +16,6 @@ import java.net.UnknownHostException;
 
 // 如需开启 Redis，须移除 exclude = {RedisAutoConfiguration.class}
 @SpringBootApplication
-@MapperScan("com.cqbo.web.mapper")
 @EnableScheduling
 @EnableAspectJAutoProxy(proxyTargetClass = true, exposeProxy = true)
 public class WebApplication {
